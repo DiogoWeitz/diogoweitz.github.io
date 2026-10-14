@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Convite — Minha Casa Organizada</title>
+  <meta property="og:title" content="Convite para o Minha Casa Organizada">
+  <meta property="og:description" content="Toque para entrar na casa e organizar contas, compras e tarefas juntos.">
+  <link rel="stylesheet" href="/estilo.css">
+  <style>
+    .codigo { font: 700 2.2rem/1.2 ui-monospace, Consolas, monospace; letter-spacing: .2em; text-align: center;
+      background: var(--papel); border: 1px solid var(--borda); border-radius: 12px; padding: 16px; margin: 16px 0; }
+    .botao { display: block; text-align: center; text-decoration: none; font-weight: 700; border-radius: 12px;
+      padding: 14px 16px; margin: 10px 0; border: 2px solid var(--destaque); color: var(--destaque); background: transparent;
+      font-size: 1rem; width: 100%; cursor: pointer; }
+    .botao.principal { background: var(--destaque); color: var(--papel); }
+    .oculto { display: none; }
+  </style>
+</head>
+<body>
+<main>
+  <div id="com-codigo" class="oculto">
+    <h1>Você recebeu um convite</h1>
+    <p>Para entrar numa casa no <strong>Minha Casa Organizada</strong> e organizar contas, compras e tarefas
+    junto com quem convidou.</p>
+
+    <div class="codigo" id="codigo"></div>
+
+    <a class="botao principal" id="abrir" href="#">Abrir no app</a>
+    <button class="botao" id="instalar" type="button">Ainda não tenho o app</button>
+    <p id="copiado" class="oculto">Código copiado. Depois de instalar, entre e toque em <strong>Recebi um convite</strong>:
+    o código já vai estar lá.</p>
+
+    <h2>Como entrar</h2>
+    <ol class="passos">
+      <li>Instale o Minha Casa Organizada e entre com sua conta.</li>
+      <li>Toque em <strong>Recebi um convite</strong> e use o código acima.</li>
+      <li>Confira de quem é a casa e toque em <strong>Entrar nesta casa</strong>.</li>
+    </ol>
+    <p class="data">O convite vale uma vez só e por 7 dias.</p>
+  </div>
+
+  <div id="sem-codigo" class="oculto">
+    <h1>Convite não encontrado</h1>
+    <p>O link está incompleto. Peça a quem convidou para mandar de novo, ou use o código da mensagem em
+    <strong>Recebi um convite</strong>, no app.</p>
+  </div>
+
+  <footer><a href="/minha-casa/privacidade/">Privacidade</a> · Contato: <a href="mailto:diogo.weitz@gmail.com">diogo.weitz@gmail.com</a></footer>
+</main>
+<script>
+  (function () {
+    var codigo = (new URLSearchParams(location.search).get('c') || '').toUpperCase();
+    if (!/^[A-Z0-9]{4,10}$/.test(codigo)) {
+      document.getElementById('sem-codigo').classList.remove('oculto');
+      return;
+    }
+    document.getElementById('com-codigo').classList.remove('oculto');
+    document.getElementById('codigo').textContent = codigo;
+    // Quem tem o app, mas o Android não abriu direto (link aberto de dentro do navegador).
+    document.getElementById('abrir').href = 'minhacasa://convite/' + codigo;
+
+    // Sem o app: copia o código antes de ir para a loja. Na primeira abertura, a
+    // tela "Recebi um convite" lê o que está copiado e já preenche.
+    document.getElementById('instalar').addEventListener('click', function () {
+      var loja = 'https://play.google.com/store/apps/details?id=br.com.dawtech.minhacasa';
+      var ir = function () { location.href = loja; };
+      document.getElementById('copiado').classList.remove('oculto');
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText('Código de convite: ' + codigo).then(function () { setTimeout(ir, 1500); }, ir);
+      } else {
+        ir();
+      }
+    });
+  })();
+</script>
+</body>
+</html>

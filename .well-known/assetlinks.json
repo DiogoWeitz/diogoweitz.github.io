@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "br.com.dawtech.minhacasa",
+      "sha256_cert_fingerprints": [
+        "C4:DD:DD:64:92:DD:4E:68:DB:60:A2:83:82:C2:D7:46:44:65:BD:22:9C:F8:59:91:6F:1F:07:64:08:23:2D:7E"
+      ]
+    }
+  }
+]

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Página não encontrada</title>
+  <link rel="stylesheet" href="/estilo.css">
+  <script>
+    // O link do convite é /minha-casa/convite/K7M2QP, e o GitHub Pages não tem
+    // uma página por código: cai aqui. Leva para a página do convite com o
+    // código na consulta. Com o app instalado, o Android abre o app antes de
+    // chegar a esta página.
+    (function () {
+      var m = location.pathname.match(/^\/minha-casa\/convite\/([A-Za-z0-9]{4,10})\/?$/);
+      if (m) location.replace('/minha-casa/convite/?c=' + m[1].toUpperCase());
+    })();
+  </script>
+</head>
+<body>
+<main>
+  <a class="voltar" href="/">← Aplicativos D.A.W</a>
+  <h1>Página não encontrada</h1>
+  <p>O endereço não existe. Veja os aplicativos na <a href="/">página inicial</a>.</p>
+</main>
+</body>
+</html>
